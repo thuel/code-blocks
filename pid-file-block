@@ -1,0 +1,27 @@
+#check if the process/script is already runnig
+#the pid file name in this example consits only of the script name
+PIDFILE=/tmp/${0##*/}.pid
+if [ $DEBUG == "yes" ]; then
+	debug_msg "PIDFILE" "$PIDFILE"
+fi
+if [ -f $PIDFILE ]; then
+  PID=$(cat $PIDFILE)
+  ps -p $PID > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "Process already running"
+    exit 1
+  else
+    ## Process not found assume not running
+    echo $$ > $PIDFILE
+    if [ $? -ne 0 ]; then
+      echo "Could not create PID file"
+      exit 1
+    fi
+  fi
+else
+  echo $$ > $PIDFILE
+  if [ $? -ne 0 ]; then
+    echo "Could not create PID file"
+    exit 1
+  fi
+fi
