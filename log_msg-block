@@ -1,0 +1,16 @@
+#Logging function; get log message as $1
+log_msg() {
+  #Define where logs should be stored
+  LOGDIR=""
+  chown $LOGNAME:$LOGNAME /var/$LOGDIR
+  #Define the name of the log file
+	LOGF=$LOGDIR/LOG.log
+	# Get date for log entry
+	LOGD=$(date)
+#optionally insert a new line in log file
+# echo "" >> $LOGF
+	printf '%s\n' "$1" |
+	while IFS= read -r line;
+		do echo "$LOGD: $line" >> $LOGF
+	done
+}
