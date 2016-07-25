@@ -1,0 +1,30 @@
+# block to generate error messages
+# optionally works together with log_msg (see commented code line)
+error_msg() {
+	err(){
+		echo "$1"
+#		log_msg "$1"	
+	}
+	case $1 in
+		1) #wrong script usage
+			msg="Usage: sh $me OR ./$me OR /full/path/to/$me"
+			err "$msg"
+			;;
+		2) #error description
+			msg=""
+			err "$msg"
+			;;
+		3) #error description
+			msg=""
+			err "$msg"
+			;;
+		4) #error description
+			msg=""
+			err "$msg"
+			;;
+		*) #any other error; more for development use
+			msg="unknown error"
+			err "$msg"
+			;;
+	esac
+}
