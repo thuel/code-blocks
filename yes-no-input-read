@@ -1,0 +1,12 @@
+#!/bin/sh
+
+ans=""
+while $ans == ""; do
+  echo -n "Do you want to continue (yes/no)?"
+  read ans
+  case $ans in
+    [yY] | [Yy][Ee][Ss]) break;;
+    [nN] | [Nn][Oo]) exit 1;;
+    *) ans="";;
+  esac
+done
