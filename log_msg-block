@@ -1,9 +1,11 @@
 #Logging function; get log message as $1
 #Define where logs should be stored
-  LOGDIR=""
-  chown $LOGNAME:$LOGNAME /var/$LOGDIR
-  #Define the name of the log file
-	LOGF=$LOGDIR/LOG.log
+LOGDIR=""
+chown $LOGNAME:$LOGNAME /var/$LOGDIR
+#Define the name of the log file
+LOGF=$LOGDIR/LOG.log
+#Set default boolean for verbose output
+VERBOSE=${VERBOSE:="no"}
 
 log_msg() {
 	# Get date for log entry
@@ -11,7 +13,10 @@ log_msg() {
 #optionally insert a new line in log file
 # echo "" >> $LOGF
 	printf '%s\n' "$1" |
-	while IFS= read -r line;
-		do echo "$LOGD: $line" >> $LOGF
+	while IFS= read -r line; do 
+		echo "$LOGD: $line" >> $LOGF
+		if [ $VERBOSE == "yes" ]; then
+			echo "$line"
+		fi
 	done
 }
